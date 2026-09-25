@@ -42,7 +42,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Orbit governance scan
-        uses: aahamed-dm/orbit-governance-action-binary@v1
+        uses: aahamed-dm/orbit-governance-action-binary@master
         with:
           orbit_governance_key: ${{ secrets.ORBIT_GOVERNANCE_KEY }}
           ai_gateway_url: ${{ secrets.AI_GATEWAY_URL }}
@@ -50,7 +50,7 @@ jobs:
           ai_gateway_model: ${{ secrets.AI_GATEWAY_MODEL }}
 ```
 
-Prefer `@v1` or an exact tag like `@v0.3.0`. Use `@master` only before the first release tag.
+Use `@master` until you publish release tags. After tagging, prefer `@v1` (floating major) or an exact tag like `@v0.3.0`.
 
 **Runner:** Linux only (`ubuntu-latest`).
 
