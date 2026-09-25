@@ -1,0 +1,3 @@
+# Treat the shipped Action binary as binary (no CRLF conversion).
+bin/orbit-governance-action binary
+*.sh text eol=lf

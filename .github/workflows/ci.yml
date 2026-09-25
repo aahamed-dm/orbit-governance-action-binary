@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  packaged-binary:
+    name: Smoke committed Linux binary
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify binary + action.yml
+        run: |
+          set -euo pipefail
+          test -f action.yml
+          test -f bin/orbit-governance-action
+          chmod +x bin/orbit-governance-action
+          file bin/orbit-governance-action
+      - name: Smoke-test binary (missing inputs → non-zero)
+        run: |
+          set +e
+          out=$(./bin/orbit-governance-action 2>&1)
+          code=$?
+          set -e
+          echo "$out"
+          if [[ $code -eq 0 ]]; then
+            echo "Expected non-zero exit without Action inputs"
+            exit 1
+          fi
+          echo "$out" | grep -q "INPUT_ORBIT_GOVERNANCE_KEY"
+          echo "Binary executes (exit=$code)"
